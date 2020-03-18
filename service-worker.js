@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/attestation-honneur/precache-manifest.bb27a9a611838b0bf7ae4323df117f5c.js"
+  "/attestation-honneur/precache-manifest.8738e481c1175c4276fb9901f53fb80f.js"
 );
 
 self.addEventListener('message', (event) => {
