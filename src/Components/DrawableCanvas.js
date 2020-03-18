@@ -2,7 +2,6 @@ import React, {useCallback, useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 
 const imageKey = "attestation-signature";
-const signDateKey = "attestation-signdate";
 
 const Image = styled.img`
     cursor: pointer;
@@ -13,7 +12,7 @@ const Canvas = styled.canvas`
     overscroll-behavior: contain;
 `;
 
-const DrawableCanvas = ({ onSignChange }) => {
+const DrawableCanvas = () => {
     const color = "black";
     const width = 2;
 
@@ -46,7 +45,6 @@ const DrawableCanvas = ({ onSignChange }) => {
         const image = localStorage.getItem(imageKey);
         if (image) {
             setImage(image);
-            onSignChange(localStorage.getItem(signDateKey));
         } else {
             setEditing(true);
         }
@@ -55,8 +53,6 @@ const DrawableCanvas = ({ onSignChange }) => {
     useEffect(() => {
         if (localStorage.getItem(image) !== image) {
             localStorage.setItem(imageKey, image);
-            localStorage.setItem(signDateKey, Date.now());
-            onSignChange(Date.now());
         }
     }, [image]);
 
@@ -133,14 +129,16 @@ const DrawableCanvas = ({ onSignChange }) => {
     }, [findxy]);
 
     useEffect(() => {
-        if (!canvasRef.current) {
+        const canvas = canvasRef.current;
+
+        if (!canvas) {
             return;
         }
         const listen = (event, handler) => {
-            canvasRef.current.addEventListener(event, handler, { passive: false });
+            canvas.addEventListener(event, handler, { passive: false });
         };
         const removeListener = (event, handler) => {
-            canvasRef.current.removeEventListener(event, handler);
+            canvas.removeEventListener(event, handler);
         };
         listen("mousemove", mouseMove);
         listen("touchmove", mouseMove);
@@ -150,9 +148,6 @@ const DrawableCanvas = ({ onSignChange }) => {
         listen("touchend", mouseUp);
         listen("mouseout", mouseOut);
         return () => {
-            if (!canvasRef.current) {
-                return;
-            }
             removeListener("mousemove", mouseMove);
             removeListener("touchmove", mouseMove);
             removeListener("mousedown", mouseDown);
