@@ -2,6 +2,7 @@
   "name": "attestation-honneur",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://cberthou.github.io/attestation-honneur/",
   "dependencies": {
     "@react-pdf/renderer": "^1.6.8",
     "@testing-library/jest-dom": "^4.2.4",
@@ -21,7 +22,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "yarn build && gh-pages -d build"
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
